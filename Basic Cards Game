@@ -1,0 +1,192 @@
+import random 
+import os
+import sys
+
+middle= os.get_terminal_size().columns 
+playerh = 20
+computerh = 20
+lanes= [
+{"player": " ", "computer": " ", "ph": 0, "ch": 0, "pd": 0, "cd": 0},
+{"player": " ", "computer": " ", "ph": 0, "ch": 0, "pd": 0, "cd": 0},
+{"player": " ", "computer": " ", "ph": 0, "ch": 0, "pd": 0, "cd": 0},
+{"player": " ", "computer": " ", "ph": 0, "ch": 0, "pd": 0, "cd": 0},
+{"player": " ", "computer": " ", "ph": 0, "ch": 0, "pd": 0, "cd": 0}]
+
+cards = [
+    {"name": "basic", "health": 1, "damage": 1, "cost": 0},
+    {"name": "basic", "health": 1, "damage": 1, "cost": 0},
+    {"name": "basic", "health": 1, "damage": 1, "cost": 0},
+    {"name": "basic", "health": 1, "damage": 1, "cost": 0},
+    {"name": "basic", "health": 1, "damage": 1, "cost": 0},
+    {"name": "basic", "health": 1, "damage": 1, "cost": 0},
+    {"name": "basic", "health": 1, "damage": 1, "cost": 0},
+    {"name": "basic2", "health": 2, "damage": 1, "cost": 1},
+    {"name": "basic2", "health": 2, "damage": 1, "cost": 1},
+    {"name": "basic2", "health": 2, "damage": 1, "cost": 1},
+    {"name": "basic2", "health": 2, "damage": 1, "cost": 1},
+    {"name": "basic2", "health": 2, "damage": 1, "cost": 1},
+    {"name": "tankish", "health": 5, "damage": 3, "cost": 4},
+    {"name": "tankish", "health": 5, "damage": 3, "cost": 4},
+    {"name": "tankish", "health": 5, "damage": 3, "cost": 4},
+    {"name": "basic3", "health": 3, "damage": 3, "cost": 3},
+    {"name": "basic3", "health": 3, "damage": 3, "cost": 3},
+    {"name": "basic3", "health": 3, "damage": 3, "cost": 3},
+    {"name": "basic3", "health": 3, "damage": 3, "cost": 3},
+    {"name": "basic3", "health": 3, "damage": 3, "cost": 3},
+    {"name": "onehit", "health": 1, "damage": 10, "cost": 5},
+    {"name": "onehit", "health": 1, "damage": 10, "cost": 5},
+    {"name": "tank", "health": 10, "damage": 1, "cost": 6},
+    {"name": "basic4", "health": 4, "damage": 4, "cost": 4},
+    {"name": "basic4", "health": 4, "damage": 4, "cost": 4},
+    {"name": "basic4", "health": 4, "damage": 4, "cost": 4},
+    {"name": "inter", "health": 2, "damage": 3, "cost": 2},
+    {"name": "inter", "health": 2, "damage": 3, "cost": 2},
+    {"name": "inter", "health": 2, "damage": 3, "cost": 2},
+    {"name": "inter2", "health": 3, "damage": 2, "cost": 2},
+    {"name": "inter2", "health": 3, "damage": 2, "cost": 2},
+    {"name": "inter2", "health": 3, "damage": 2, "cost": 2},
+    {"name": "buff", "health": 6, "damage": 6, "cost": 7},
+    {"name": "inter3", "health": 2, "damage": 4, "cost": 3},
+    {"name": "inter3", "health": 2, "damage": 4, "cost": 3},
+    {"name": "meh", "health": 2, "damage": 2, "cost": 1},
+    {"name": "meh", "health": 2, "damage": 2, "cost": 1},
+    {"name": "meh", "health": 2, "damage": 2, "cost": 1},
+    {"name": "meh", "health": 2, "damage": 2, "cost": 1},
+    {"name": "meh", "health": 2, "damage": 2, "cost": 1}]
+new_cards=[
+    {"name": "basic", "health": 1, "damage": 1, "cost": 0},
+    {"name": "basic2", "health": 2, "damage": 1, "cost": 1},
+    {"name": "tankish", "health": 5, "damage": 3, "cost": 4},
+    {"name": "basic3", "health": 3, "damage": 3, "cost": 3},
+    {"name": "onehit", "health": 1, "damage": 10, "cost": 5},
+    {"name": "basic4", "health": 4, "damage": 4, "cost": 4},
+    {"name": "inter", "health": 2, "damage": 3, "cost": 2},
+    {"name": "inter2", "health": 3, "damage": 2, "cost": 2},
+    {"name": "meh", "health": 2, "damage": 2, "cost": 1},
+    {"name": "inter3", "health": 2, "damage": 4, "cost": 3},
+    {"name": "buff", "health": 6, "damage": 6, "cost": 7}]
+    
+cc = [random.choice(cards) for _ in range(4)]
+pc = [random.choice(cards) for _ in range(4)]
+
+print("enter 1-~ to pick card or type 0 to go to next lane")
+ppw=1
+cpw=1
+pcc=4
+ccc=4
+cl=0
+curcom=0
+while playerh>0 or Computerh>0:
+    for j in range (2,102):
+        cl=0
+        clc=0
+        print(">>>Player's turn<<<".center(middle))
+        for x in range(0,pcc):
+            print(f"You have {pc[x]['name']} | Health: {pc[x]['health']} | Damage: {pc[x]['damage']} \nCost: {pc[x]['cost']}")
+        while cl<=4:
+            print(f"●Power={ppw}●".center(middle))
+            print(f"Put Card in lane {cl+1}?".center(middle))
+            playeri=int(input())
+            while playeri >0 and playeri<=pcc:
+                if lanes[cl]['player']!=" ":
+                    print(f"There is already {lanes[cl]['player']} in this lane".center(middle), flush=True)
+                    break
+                if playeri>pcc:
+                    print("You don't have that many cards".center(middle), flush=True)    
+                elif ppw>=pc[playeri-1]['cost'] and lanes[cl]['player']==" ":
+                    ppw=ppw-pc[playeri-1]['cost']
+                    print(f"You put down {pc[playeri-1]['name']} in lane {cl+1}".center(middle))
+                    print(f"Health:{pc[playeri-1]['health']}".center(middle))
+                    print(f"Damage:{pc[playeri-1]['damage']}".center(middle))
+                    lanes[cl]['player']=pc[playeri-1]['name']
+                    lanes[cl]['ph']=pc[playeri-1]['health']
+                    lanes[cl]['pd']=pc[playeri-1]['damage']
+                    pcc=pcc-1
+                    pc.pop(playeri-1)
+                    for x in range(0,pcc):
+                        print(f"You have {pc[x]['name']} ({pc[x]['cost']})".center(middle))
+                    break
+                elif pc[playeri-1]['cost']>ppw:
+                    print("You don't have enough power".center(middle))
+                    break
+            if playeri==0:
+                print("Lane skipped".center(middle), flush=True)
+            
+            cl=cl+1        
+            ct=0    
+            if cl>4:
+                print("End of Player's turn".center(middle))
+                cl=0
+                print(">>>Computer's turn<<<".center(middle))
+                print(f"●Computer Power={cpw}●".center(middle))
+                for y in range (0,ccc+1):
+                    if y<len(cc):                
+                        if lanes[y]['player']!=" " and lanes[y]['computer']==" ":
+                            if cc[y]['cost']<=cpw and y<ccc:
+                                cpw=cpw-cc[y]['cost']
+                                print(f"Computer put down {cc[y]['name']} in lane {y+1}".center(middle))
+                                print(f"Health:{cc[y]['health']}".center(middle))
+                                print(f"Damage:{cc[y]['damage']}".center(middle))
+                                print(f"Computer Power={cpw}")
+                                lanes[y]['computer']=cc[y]['name']
+                                lanes[y]['ch']=cc[y]['health']
+                                lanes[y]['cd']=cc[y]['damage']
+                                cc.pop(y)
+                                ccc=ccc-1
+                for q in range (0,ccc+1):
+                    if q<len(cc):
+                        if lanes[q]['computer']==" ":
+                            if cc[q]['cost']<=cpw  and q<ccc:
+                                cpw=cpw-cc[q]['cost']
+                                print(f"Computer put down {cc[q]['name']} in lane {q+1}".center(middle))
+                                print(f"Health:{cc[q]['health']}".center(middle))
+                                print(f"Damage:{cc[q]['damage']}".center(middle))
+                                print(f"Computer Power={cpw}")
+                                lanes[q]['computer']=cc[q]['name']
+                                lanes[q]['ch']=cc[q]['health']
+                                lanes[q]['cd']=cc[q]['damage']
+                                cc.pop(q)
+                                ccc=ccc-1
+                           
+                ct=2
+                print("~~~Fight!~~~".center(middle))
+                for a in range (0,5):
+                    if lanes[a]['player']!=" " and lanes[a]['computer']!=" ":
+                        lanes[a]['ph']=lanes[a]['ph']-lanes[a]['cd']
+                        print(f"P's {lanes[a]['player']} damaged C's {lanes[a]['computer']} for {lanes[a]['pd']} damage in lane {a+1}!".center(middle))
+                        lanes[a]['ch']=lanes[a]['ch']-lanes[a]['pd']
+                        print(f"C's {lanes[a]['computer']} damaged P's {lanes[a]['player']} for {lanes[a]['cd']} damage in lane {a+1}!".center(middle))
+                        if lanes[a]['ph']<=0:
+                            lanes[a]['ph']=0
+                            print(f"P's {lanes[a]['player']} in lane {a+1} is destroyed!".center(middle))
+                            lanes[a]['player'] = " "
+                            lanes[a]['pd']= 0
+                        if lanes[a]['ch']<=0:
+                            lanes[a]['ch']=0
+                            print(f"C's {lanes[a]['computer']} in lane {a+1} is destroyed!".center(middle))
+                            lanes[a]['computer'] = " "
+                            lanes[a]['cd']= 0     
+                    elif lanes[a]['player']!=" " and lanes[a]['computer']==" ":
+                        computerh = computerh-lanes[a]['pd']
+                        print(f"P's {lanes[a]['player']} in lane {a+1} damaged Computer for {lanes[a]['pd']}.".center(middle))
+                        print(f"Computer is now {computerh} Health".center(middle))
+                        if computerh<=0:
+                            print("---You Win!---".center(middle))
+                            sys.exit()
+                    elif lanes[a]['player']==" " and lanes[a]['computer']!=" ":
+                        playerh = playerh-lanes[a]['cd']
+                        print(f"C's {lanes[a]['computer']} damaged Player for {lanes[a]['cd']}.".center(middle))
+                        print(f"Player is now {playerh} Health".center(middle))
+                        if playerh<=0:
+                            print("---You Lose!---".center(middle))
+                            sys.exit()
+                    else:
+                        print(f"Nothing happened in lane {a+1}".center(middle))
+                ccc= ccc+1
+                pcc= pcc+1
+                pc.append(random.choice(new_cards))
+                cc.append(random.choice(new_cards))
+                ppw=j
+                cpw=j
+                break
+                      
